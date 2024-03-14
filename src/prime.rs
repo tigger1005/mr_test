@@ -15,9 +15,9 @@ pub fn get_prime_numer(rng: &mut ThreadRng, k: usize) -> usize {
         let cross_sum = pos_prime
             .to_bytes_le()
             .iter()
-            .map(|x| ((*x >> 4) + (*x & 0x0F)) as u32)
+            .map(|x| *x as u32)
             .sum::<u32>();
-        if cross_sum % 3 == 0 || cross_sum % 5 == 0 {
+        if cross_sum % 3 == 0 || cross_sum % 5 == 0 || cross_sum % 17 == 0 {
             continue;
         }
 
