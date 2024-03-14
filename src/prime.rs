@@ -13,14 +13,14 @@ pub fn get_prime_numer(rng: &mut ThreadRng, k: usize) -> (usize, usize) {
         pos_prime = rng.gen_biguint(1024);
         pos_prime.set_bit(0, true);
 
-        // Pre test for divider 3 and 5
         let array = pos_prime.to_bytes_le();
-
+        // Pre test for divider 3, 5 and 17
         let cross_sum = array.iter().map(|x| *x as i32).sum::<i32>();
         if cross_sum % 3 == 0 || cross_sum % 5 == 0 || cross_sum % 17 == 0 {
             count_pre += 1;
             continue;
         }
+        // Pre test for divider 11 and 23
         let cross_sum = array
             .iter()
             .enumerate()
