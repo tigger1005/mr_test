@@ -62,7 +62,7 @@ fn mr_time_investigation(n: usize) {
     let now = Instant::now();
     (0..n).into_par_iter().for_each(|_| {
         let mut rng = rand::thread_rng();
-        let _count = get_prime_numer(&mut rng, 25);
+        let (_count_mr, _count_pre) = get_prime_numer(&mut rng, 25);
         print!(".");
         _ = std::io::stdout().flush();
     });
@@ -80,17 +80,20 @@ fn mr_calls_investigation(n: usize, k: usize) {
         .into_par_iter()
         .map(|_| {
             let mut rng = rand::thread_rng();
-            let count = get_prime_numer(&mut rng, k);
-            //            println!("Prime number found after {} tries", &count);
-            print!(".");
+            let (count_mr, count_pre) = get_prime_numer(&mut rng, k);
+            println!(
+                "Prime number found after MR:{:5}  Precheck:{:5} tries",
+                &count_mr, count_pre
+            );
+            //print!(".");
             _ = std::io::stdout().flush();
-            count
+            count_mr
         })
         .collect();
     println!();
     //    println!("0x{:#?}", &num_of_counts_per_prime);
     println!(
-        "Average number of Miller-Rabin calls: {}",
+        "Average number of Miller-Rabin calls: {:.0}",
         average(&num_of_counts_per_prime)
     );
 }
